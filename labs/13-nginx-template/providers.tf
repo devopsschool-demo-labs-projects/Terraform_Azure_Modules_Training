@@ -4,9 +4,9 @@
 # Credentials come from terraform.tfvars (gitignored) or, when left empty, from `az login`.
 terraform {
   backend "azurerm" {
-    resource_group_name  = "rg-tfstate-demo"
-    storage_account_name = "tfstatedemo123456"
-    container_name       = "tfstate"
+    resource_group_name  = "rajeshkumar1"
+    storage_account_name = "rajeshkumar1"
+    container_name       = "rajeshkumar1"
     key                  = "lab13-nginx-template.tfstate"
   }
 }

@@ -35,7 +35,9 @@ variable "azure_region" {
 variable "vm_size" {
   description = "SKU for both Ubuntu VMs."
   type        = string
-  default     = "Standard_B2s_v2"
+  # Standard_B2s_v2 cannot be used in this subscription: standardBsv2Family quota is 0 in West US 3.
+  # StandardDdsv6Family has 20 cores of quota there, so the lab uses Standard_D2ds_v6 (2 vCPU).
+  default = "Standard_D2ds_v6"
 }
 
 variable "vm_count" {
