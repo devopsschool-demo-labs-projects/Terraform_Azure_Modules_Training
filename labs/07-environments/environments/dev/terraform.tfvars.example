@@ -1,0 +1,5 @@
+environment = "dev"
+azure_region = "eastus"
+vm_size      = "Standard_B2s_v2"
+vnet_cidr    = "10.70.0.0/16"
+subnet_cidr  = "10.70.1.0/24"

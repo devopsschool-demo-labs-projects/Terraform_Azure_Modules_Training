@@ -1,0 +1,2 @@
+rg_name = "rg-tfmod-03"
+# azure_region is optional; defaults to eastus.

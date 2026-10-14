@@ -1,0 +1,11 @@
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfplan
+**/tfplan
+**/terraform.tfvars
+**/*.auto.tfvars
+**/crash.log
+**/crash.*.log
+.DS_Store
+# Do commit .terraform.lock.hcl after real initialization in your repository.
