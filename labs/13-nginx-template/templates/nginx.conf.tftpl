@@ -1,0 +1,23 @@
+# nginx site config rendered by Terraform templatefile().
+# Source: templates/nginx.conf.tftpl - do not edit on the VM; change the template and re-apply.
+# VM: ${vm_hostname}
+server {
+    listen ${nginx_port} default_server;
+    listen [::]:${nginx_port} default_server;
+    server_name ${server_name};
+
+    root ${doc_root};
+    index ${index_file};
+
+    add_header X-Served-By "${vm_hostname}" always;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location = /health {
+        access_log off;
+        add_header Content-Type text/plain;
+        return 200 "healthy from ${vm_hostname}\n";
+    }
+}

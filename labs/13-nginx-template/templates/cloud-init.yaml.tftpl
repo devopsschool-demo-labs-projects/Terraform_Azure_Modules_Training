@@ -1,0 +1,46 @@
+#cloud-config
+# Rendered by Terraform templatefile() and passed to the VM as custom_data.
+# Cloud-init runs this on first boot: install nginx, drop in the rendered config, serve it.
+hostname: ${vm_hostname}
+preserve_hostname: false
+
+package_update: true
+packages:
+  - nginx
+
+write_files:
+  # The rendered nginx.conf.tftpl, base64-encoded so YAML indentation can never corrupt it.
+  - path: /etc/nginx/sites-available/${site_name}
+    owner: root:root
+    permissions: '0644'
+    encoding: b64
+    content: ${nginx_conf_b64}
+
+  # Landing page served from the document root chosen in Terraform.
+  - path: ${doc_root}/${index_file}
+    owner: root:root
+    permissions: '0644'
+    content: |
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <title>${page_title}</title>
+        <style>
+          body { font-family: sans-serif; margin: 3rem; }
+          h1 { color: #2563eb; }
+        </style>
+      </head>
+      <body>
+        <h1>${page_title}</h1>
+        <p>NGINX on <strong>${vm_hostname}</strong> listening on port ${nginx_port}.</p>
+        <p>Config generated from <code>templates/nginx.conf.tftpl</code> via <code>templatefile()</code>.</p>
+      </body>
+      </html>
+
+runcmd:
+  # Swap Ubuntu's default site for the Terraform-rendered one and reload.
+  - rm -f /etc/nginx/sites-enabled/default
+  - ln -s /etc/nginx/sites-available/${site_name} /etc/nginx/sites-enabled/${site_name}
+  - nginx -t
+  - systemctl restart nginx

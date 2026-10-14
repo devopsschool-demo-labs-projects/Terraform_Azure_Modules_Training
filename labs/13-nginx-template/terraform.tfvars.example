@@ -1,0 +1,12 @@
+# Copy to terraform.tfvars and fill in (same service principal as the variables-lab project).
+# terraform.tfvars is gitignored; leaving every value empty falls back to `az login` CLI auth.
+
+client_id       = ""
+client_secret   = ""
+tenant_id       = ""
+subscription_id = ""
+
+# Optional overrides:
+# azure_region    = "West US 3"
+# nginx_port      = 8080
+# page_title      = "Changed via tfvars"
